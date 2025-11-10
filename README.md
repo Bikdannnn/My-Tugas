@@ -1,2 +1,2 @@
 # My-Tugas
-[Academic Peoject: OOP Class] Assignment Tracking App for Android
+[Academic Project: OOP Class] Assignment Tracking App for Android
