@@ -1,0 +1,53 @@
+package com.example.assignmenttrack
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.Instant
+import java.time.Month
+
+data class Task(
+    val id: String,
+    val type: String,
+    val title: String,
+    val description: String,
+    val deadline: Instant,
+    val status: Boolean
+)
+
+fun createInstant(year: Int, month: Month, day: Int, hour: Int, minute: Int): Instant {
+    val localDateTime = LocalDateTime.of(year, month, day, hour, minute)
+    return localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+}
+
+
+val TaskList = listOf(
+    Task(
+        id = "1",
+        type = "Study",
+        title = "Study Compose",
+        description = "Learn how to build UI with Jetpack Compose",
+        status = false,
+        // Deadline: Today (Nov 12), 10:00 PM WITA
+        deadline = createInstant(2025, Month.NOVEMBER, 12, 22, 0)
+    ),
+    Task(
+        id = "2",
+        type = "Work",
+        title = "Do Laundry",
+        description = "Finish before 6 PM",
+        status = false,
+        // Deadline: Today (Nov 12), 6:00 PM WITA
+        deadline = createInstant(2025, Month.NOVEMBER, 12, 18, 0)
+    ),
+    Task(
+        id = "3",
+        type = "Study",
+        title = "Read Paper",
+        description = "Review the CNN architecture paper",
+        status = false,
+        // Deadline: Tomorrow (Nov 13), 9:30 AM WITA
+        deadline = createInstant(2025, Month.NOVEMBER, 13, 9, 30)
+    ),
+)
