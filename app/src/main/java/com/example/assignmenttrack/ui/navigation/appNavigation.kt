@@ -3,6 +3,7 @@ package com.example.assignmenttrack.ui.navigation
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.runtime.Composable
@@ -27,7 +28,8 @@ sealed class Screen(val route: String) {
 fun AppNavigation(navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
-        enterTransition = { slideInVertically( animationSpec = tween(500), initialOffsetY = { it } ) + fadeIn() },
+        enterTransition = { slideInVertically( animationSpec = tween(1000), initialOffsetY = { it } ) + fadeIn() },
+        exitTransition = { fadeOut() },
         startDestination = Screen.Dashboard.route
     ) {
         composable( Screen.Dashboard.route){

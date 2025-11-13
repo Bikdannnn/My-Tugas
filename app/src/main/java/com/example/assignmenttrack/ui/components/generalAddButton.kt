@@ -11,18 +11,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddTask(modifier: Modifier = Modifier, onClick: () -> Unit){
+fun GeneralSubmitButton(modifier: Modifier = Modifier, onClick: () -> Unit, text: String ){
     Button(
         onClick = onClick,
         modifier = modifier
-            .padding(bottom = 24.dp)
-            .size(width = 220.dp, height = 40.dp),
+            .padding(bottom = 24.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF2260FF)
         )
     ) {
         Text(
-            text = "+ Tambah Tugas",
+            text = text,
             color = Color.White
         )
     }

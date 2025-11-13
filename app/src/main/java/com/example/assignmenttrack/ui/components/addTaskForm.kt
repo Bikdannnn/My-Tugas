@@ -1,8 +1,6 @@
 package com.example.assignmenttrack.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,10 +15,8 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 //import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
@@ -33,18 +29,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.filled.MoreTime
 import androidx.compose.material3.ExperimentalMaterial3Api
 import java.time.Instant
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import androidx.compose.material.icons.filled.MoreTime
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.Button
+import androidx.compose.material3.TextButton
+import java.time.LocalDateTime
+import java.time.LocalTime
+
+
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,28 +60,11 @@ fun TaskForm(modifier: Modifier = Modifier){
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         item {
-            //        Jenis kegiatan
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text("Jenis Kegiatan",color = Color.Black)
-                TextField(
-                    value = assignmentType,
-                    onValueChange = { assignmentType = it },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFECF1FF),
-                        unfocusedContainerColor = Color(0xFFECF1FF),
-                        disabledContainerColor = Color(0xFFECF1FF),
-                        errorContainerColor = Color(0xFFECF1FF),
-                        cursorColor = Color.DarkGray,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.DarkGray
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(20.dp))
-                )
-            }
+            FormField1(
+                title = "Assignment Type",
+                value = assignmentType,
+                onValueChange = { assignmentType = it }
+            )
         }
 
         item {
@@ -94,28 +72,11 @@ fun TaskForm(modifier: Modifier = Modifier){
         }
 
         item {
-            //        judul kegiatan
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text("Judul Kegiatan", color = Color.Black)
-                TextField(
-                    value = assignmentTitle,
-                    onValueChange = { assignmentTitle = it },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFECF1FF),
-                        unfocusedContainerColor = Color(0xFFECF1FF),
-                        disabledContainerColor = Color(0xFFECF1FF),
-                        errorContainerColor = Color(0xFFECF1FF),
-                        cursorColor = Color.DarkGray,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.DarkGray
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(20.dp))
-                )
-            }
+            FormField1(
+                title = "Assignment Title",
+                value = assignmentTitle,
+                onValueChange = { assignmentTitle = it }
+            )
         }
 
         item {
@@ -123,37 +84,12 @@ fun TaskForm(modifier: Modifier = Modifier){
         }
 
         item {
-            //        handle pilih tanggal dan waktu
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text("Deadline Tanggal",color = Color.Black)
-                TextField(
-                    value = selectedDateTime.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")),
-                    onValueChange = { /* Read-only */ },
-                    readOnly = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFECF1FF),
-                        unfocusedContainerColor = Color(0xFFECF1FF),
-                        disabledContainerColor = Color(0xFFECF1FF),
-                        errorContainerColor = Color(0xFFECF1FF),
-                        cursorColor = Color.DarkGray,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.DarkGray
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .clickable { showDatePicker = true },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.DateRange,
-                            contentDescription = "Select Date",
-                            tint = Color(0xFF2260FF)
-                        )
-                    }
-                )
-            }
+            FormFieldDateTime(
+                title = "Due Date & Time",
+                dateTime = selectedDateTime,
+                onDateClick = { showDatePicker = true },
+                onTimeClick = { showTimePicker = true }
+            )
         }
 
         item {
@@ -161,66 +97,86 @@ fun TaskForm(modifier: Modifier = Modifier){
         }
 
         item {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text("Deadline Waktu",color = Color.Black)
-                TextField(
-                    value = selectedDateTime.format(DateTimeFormatter.ofPattern("hh:mm a")),
-                    onValueChange = { /* Read-only */ },
-                    readOnly = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFECF1FF),
-                        unfocusedContainerColor = Color(0xFFECF1FF),
-                        disabledContainerColor = Color(0xFFECF1FF),
-                        errorContainerColor = Color(0xFFECF1FF),
-                        cursorColor = Color.DarkGray,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.DarkGray
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .clickable { showTimePicker = true },
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.MoreTime,
-                            contentDescription = "Select Time",
-                            tint = Color(0xFF2260FF)
-                        )
-                    }
-                )
-            }
+            FormField2(
+                title = "Description",
+                value = assignmentDescription,
+                onValueChange = { assignmentDescription = it }
+            )
         }
+
 
         item {
             Spacer(modifier = Modifier.padding(16.dp))
         }
 
         item {
-            //        Deskripsi kegiatan
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text("Deskripsi Kegiatan", color = Color.Black)
-                OutlinedTextField(
-                    value = assignmentDescription,
-                    onValueChange = { assignmentDescription = it },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        errorContainerColor = Color.Transparent,
-                        cursorColor = Color.DarkGray,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = Color.Black,
-                        unfocusedTextColor = Color.DarkGray,
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .defaultMinSize(minHeight = 200.dp)
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .border(3.dp, Color(0xFFCAD6FF), shape = RoundedCornerShape(20.dp))
-                )
+            GeneralSubmitButton(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .padding(16.dp),
+                text = "Tambah Tugas",
+                onClick = { /* TODO: Implement form submission logic */ }
+            )
+        }
+    }
+
+    if (showDatePicker) {
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = selectedDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        )
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        val selectedDate = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+                        selectedDateTime = selectedDateTime.with(selectedDate)
+                    }
+                    showDatePicker = false
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
+
+
+
+//    Handle the time picker dialogue
+    if (showTimePicker) {
+        val timePickerState = rememberTimePickerState(
+            initialHour = selectedDateTime.hour,
+            initialMinute = selectedDateTime.minute,
+            is24Hour = false
+        )
+        Dialog(onDismissRequest = { showTimePicker = false }) {
+            Column(
+                modifier = Modifier
+                    .background(Color.White, shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                TimePicker(state = timePickerState)
+                Row {
+                    TextButton(onClick = { showTimePicker = false }) {
+                        Text("Cancel")
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    TextButton(onClick = {
+                        val selectedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
+                        selectedDateTime = selectedDateTime.with(selectedTime)
+                        showTimePicker = false
+                    }) {
+                        Text("OK")
+                    }
+                }
             }
         }
     }

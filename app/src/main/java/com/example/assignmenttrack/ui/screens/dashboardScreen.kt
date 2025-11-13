@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,10 +19,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.assignmenttrack.data.TaskList
-import com.example.assignmenttrack.ui.components.AddTask
+import com.example.assignmenttrack.ui.components.GeneralSubmitButton
 import com.example.assignmenttrack.ui.components.ProfileSection
 import com.example.assignmenttrack.ui.components.TaskCard
 
@@ -38,11 +41,14 @@ fun MainDashboard(
             ProfileSection(name = "Faiz")
             TaskListScreen()
         }
-        AddTask(
+        GeneralSubmitButton(
             modifier = Modifier
+                .clip(shape = CircleShape)
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 8.dp),
-            onClick = onAddTaskClick
+                .fillMaxWidth(0.9f)
+                .padding(all = 24.dp),
+            onClick = onAddTaskClick,
+            text = "Tugas Baru"
         )
     }
 }

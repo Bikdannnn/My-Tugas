@@ -29,7 +29,6 @@ fun AddTaskScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Calendar()
-
             TaskForm()
         }
     }

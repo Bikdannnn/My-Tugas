@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AssignmentTrackTheme {
-                AddTaskScreen()
+                AppNavigation()
             }
         }
     }
