@@ -173,17 +173,20 @@ fun TaskForm(modifier: Modifier = Modifier) {
                     selectedYearContainerColor = Color(0xFF3B82F6),
                     selectedYearContentColor = Color.White,
                     currentYearContentColor = Color(0xFF3B82F6),
-                    navigationContentColor = Color.Black, dateTextFieldColors = OutlinedTextFieldDefaults.colors(
-                        unfocusedTextColor = Color.Black,
-                        focusedTextColor = Color.Black,
-                        unfocusedBorderColor = Color(0xFF3B82F6),
-                        focusedBorderColor = Color(0xFF3B82F6),
-                        unfocusedLabelColor = Color.Black,
-                        focusedLabelColor = Color(0xFF3B82F6),
-                        cursorColor = Color(0xFF3B82F6),
-                        selectionColors =
-                            TextSelectionColors(handleColor = Color(0xFF3B82F6),
-                                backgroundColor = Color(0xFF3B82F6).copy(alpha = 0.4f))
+                    navigationContentColor = Color.Black,
+                    dateTextFieldColors = OutlinedTextFieldDefaults
+                        .colors(
+                            unfocusedTextColor = Color.Black,
+                            focusedTextColor = Color.Black,
+                            unfocusedBorderColor = Color(0xFF3B82F6),
+                            focusedBorderColor = Color(0xFF3B82F6),
+                            unfocusedLabelColor = Color.Black,
+                            focusedLabelColor = Color(0xFF3B82F6),
+                            cursorColor = Color(0xFF3B82F6),
+                            selectionColors = TextSelectionColors(
+                                handleColor = Color(0xFF3B82F6),
+                                backgroundColor = Color(0xFF3B82F6).copy(alpha = 0.4f)
+                            )
                     )
                 )
             )
