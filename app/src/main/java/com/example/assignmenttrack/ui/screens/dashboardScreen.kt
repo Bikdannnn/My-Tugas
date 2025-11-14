@@ -1,5 +1,6 @@
 package com.example.assignmenttrack.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -43,10 +44,9 @@ fun MainDashboard(
             }
             GeneralSubmitButton(
                 modifier = Modifier
-                    .clip(shape = CircleShape)
                     .align(Alignment.BottomCenter)
-                    .fillMaxWidth(0.9f)
-                    .padding(all = 24.dp),
+                    .fillMaxWidth(1f)
+                    .padding(all = 32.dp),
                 onClick = onAddTaskClick,
                 text = "Tugas Baru"
             )
@@ -62,7 +62,7 @@ fun TaskListScreen(modifier: Modifier = Modifier) {
 
     LazyColumn(
         modifier = modifier.padding(horizontal = 16.dp),
-        contentPadding = PaddingValues(top = 8.dp, bottom = 32.dp)
+        contentPadding = PaddingValues(top = 8.dp, bottom = 128.dp)
     ){
         items(items = taskList, key = { task -> task.id }) { task ->
             TaskCard(task)
