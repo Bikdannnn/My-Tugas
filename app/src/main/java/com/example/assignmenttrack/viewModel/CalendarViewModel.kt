@@ -1,16 +1,15 @@
-package com.example.assignmenttrack.ViewModel
+package com.example.assignmenttrack.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.assignmenttrack.Model.CalendarTask
+import com.example.assignmenttrack.Data.TaskList
 import com.example.assignmenttrack.Model.Task
+import com.example.assignmenttrack.uiStateData.CalendarTask
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import java.time.ZoneId
-import com.example.assignmenttrack.Model.TaskList
 import java.time.Month
 
 class CalendarViewModel: ViewModel(){
