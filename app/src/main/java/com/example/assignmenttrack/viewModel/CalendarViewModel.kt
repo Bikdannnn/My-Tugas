@@ -27,12 +27,12 @@ class CalendarViewModel @Inject constructor(private val repository: TaskReposito
 
     // Ambil semua task dari repository
     private val allTasks: StateFlow<List<Task>> = repository.getAllTasks()
-        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        .stateIn(viewModelScope, SharingStarted.Companion.Lazily, emptyList())
 
     val selectedDateTriple: StateFlow<Triple<Int, Int, Int>?> =
         selectedDate.map { date ->
             date?.let { Triple(it.dayOfMonth, it.monthValue, it.year) }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+        }.stateIn(viewModelScope, SharingStarted.Companion.Lazily, null)
 
     // CalendarTask: group tasks berdasarkan tanggal
     val calendarTasks: StateFlow<List<CalendarTask>> =
@@ -41,7 +41,7 @@ class CalendarViewModel @Inject constructor(private val repository: TaskReposito
                 .map { (day, tasksForDay) ->
                     CalendarTask(day = day, tasks = tasksForDay)
                 }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        }.stateIn(viewModelScope, SharingStarted.Companion.Lazily, emptyList())
 
     // Filter task berdasarkan tanggal yang dipilih
     val selectedDateTasks: StateFlow<List<Task>> =
@@ -51,7 +51,7 @@ class CalendarViewModel @Inject constructor(private val repository: TaskReposito
                 val taskDate = it.deadline.atZone(ZoneId.systemDefault()).toLocalDate()
                 taskDate == date
             }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        }.stateIn(viewModelScope, SharingStarted.Companion.Lazily, emptyList())
 
     // Set tanggal yang dipilih di kalender
     fun setSelectedDate(date: LocalDate) {
