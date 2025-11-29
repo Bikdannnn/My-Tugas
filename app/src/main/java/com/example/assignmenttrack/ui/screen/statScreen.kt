@@ -30,7 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.assignmenttrack.uiStateData.defaultUser
 import com.example.assignmenttrack.ui.theme.leagueSpartan
-import com.example.assignmenttrack.viewModel.UserViewModel
 import kotlin.math.cos
 import kotlin.math.sin
 

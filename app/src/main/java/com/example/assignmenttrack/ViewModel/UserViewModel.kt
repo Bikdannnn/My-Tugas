@@ -1,7 +1,11 @@
 package com.example.assignmenttrack.viewModel
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.assignmenttrack.database.TaskRepository
 import com.example.assignmenttrack.database.UserRepository
 import com.example.assignmenttrack.model.Task
@@ -18,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor
     (private val userRepository: UserRepository,
-     private val taskRepository: TaskRepository): ViewModel()
+     private val taskRepository: TaskRepository
+): ViewModel()
 {
     private val _user = MutableStateFlow<User>(defaultUser)
     val user: StateFlow<User> = _user
@@ -27,15 +32,28 @@ class UserViewModel @Inject constructor
         updateUser()
     }
 
-    /*TODO: Update for Profile*/
+    fun updatePhotoProfile(uri: Uri){
+        _user.value.profilePictureUri = uri.toString()
+        viewModelScope.launch{
+            updateUser()
+        }
+    }
+
+    fun updateName(name: String){
+    }
+    // Bug di StatScreen dimana tidak berubah biarpun ada tugas - Medium
+    // Bug di Profile biarpun terganti tapi tidak selamanya dan harus ganti screen - Hard
+    // Bug di calendar dimana semua tugas pada tanggal yang sama ditandai
+    // serta catatan tanggal yang dipencet masih ada - Easy?
     fun updateUser(){
         viewModelScope.launch {
-            combine (
+            combine(
                 userRepository.getUser(),
-                taskRepository.getAllTasks()) { userData, tasks ->
+                taskRepository.getAllTasks()
+            ) { userData, tasks ->
                 userData?.copy(
                     name = user.value.name,
-                    profilePictureId = defaultUser.profilePictureId,
+                    profilePictureUri = user.value.profilePictureUri,
                     taskCompleted = tasks.count { it.status == true },
                     taskLate = tasks.count { it.status == false && it.deadline.isBefore(Instant.now()) },
                     taskPending = tasks.count { it.status == null },

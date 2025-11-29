@@ -22,19 +22,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.assignmenttrack.uiStateData.defaultUser
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.rememberAsyncImagePainter
+import com.example.assignmenttrack.R
 import com.example.assignmenttrack.ui.theme.leagueSpartan
 
 // Profil (bagian atas di dashboard)
 @Composable
-fun ProfileSection(name: String, onProfileClick: () -> Unit, onStatClick: () -> Unit, onCalendarClick: () -> Unit) {
+fun ProfileSection(viewModel: UserViewModel = hiltViewModel(), onProfileClick: () -> Unit, onStatClick: () -> Unit, onCalendarClick: () -> Unit) {
+    val user by viewModel.user.collectAsStateWithLifecycle()
+
+    val painter: Painter = if (user.profilePictureUri.isNotEmpty()) {
+        rememberAsyncImagePainter(user.profilePictureUri)
+    } else {
+        painterResource(R.drawable.profile)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -59,7 +72,7 @@ fun ProfileSection(name: String, onProfileClick: () -> Unit, onStatClick: () -> 
                         .padding(all = 8.dp)
                         .clip(shape = CircleShape)
                         .border(width = 1.dp, color = Color.Black, shape = CircleShape),
-                    painter = painterResource(id = defaultUser.profilePictureId),
+                    painter = painter,
                     contentDescription = ("User Profile"),
                 )
 
@@ -73,7 +86,7 @@ fun ProfileSection(name: String, onProfileClick: () -> Unit, onStatClick: () -> 
                     )
 
                     Text(
-                        text = name,
+                        text = user.name,
                         color = Color.Black, style = MaterialTheme.typography.titleLarge,
                         fontFamily = leagueSpartan,
                         fontWeight = FontWeight.Bold,
