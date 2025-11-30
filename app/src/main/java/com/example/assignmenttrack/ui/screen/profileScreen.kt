@@ -30,8 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,21 +40,17 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.assignmenttrack.ui.theme.leagueSpartan
 import com.example.assignmenttrack.R
 import com.example.assignmenttrack.viewModel.UserViewModel
+import java.io.File
 
 @Composable
 fun ProfileSection(viewModel: UserViewModel = hiltViewModel(), onBackClick: () -> Unit){
     val user by viewModel.user.collectAsStateWithLifecycle()
-
-    val painter: Painter = if (user.profilePictureUri.isNotEmpty()) {
-        rememberAsyncImagePainter(user.profilePictureUri) // Foto baru
-    } else {
-        painterResource(R.drawable.profile) //Foto lama
-    }
+    val context = LocalContext.current
 
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        uri?.let { viewModel.updatePhotoProfile(uri) }
+        uri?.let { viewModel.updatePhotoProfile(context, uri) }
     } // Library ambil foto dari galerr, outputnya Uri
 
     Surface(
@@ -101,7 +97,11 @@ fun ProfileSection(viewModel: UserViewModel = hiltViewModel(), onBackClick: () -
                     .width(200.dp)
                     .height(200.dp)
                     .clickable { launcher.launch("image/*") },
-                painter = painter,
+                painter =  rememberAsyncImagePainter(
+                    model = user.profilePicturePath?.takeIf { it.isNotEmpty() }?.let { File(it) }
+                        ?: R.drawable.profile
+                ),
+                contentScale = ContentScale.Crop,
                 contentDescription = ("User Profile"),
             )
 

@@ -34,7 +34,7 @@ import kotlin.math.sin
 
 @Composable
 fun StatScreen(viewModel: UserViewModel = hiltViewModel()){
-    val user by viewModel.user.collectAsStateWithLifecycle()
+    val stat by viewModel.stat.collectAsStateWithLifecycle()
 
     Surface(color = Color(0xFFCAD6FF)){
         Box(
@@ -65,7 +65,7 @@ fun StatScreen(viewModel: UserViewModel = hiltViewModel()){
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Total Aktivitas: \n ${user.taskTotal}",
+                        text = "Total Aktivitas: \n ${stat.taskTotal}",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
@@ -91,9 +91,9 @@ fun StatScreen(viewModel: UserViewModel = hiltViewModel()){
 //                      Magic Slices
                         val slices = listOf(
 
-                            Slice(user.taskCompleted.toFloat(), Color(0xFF64B5F6),"Completed"),
-                            Slice(user.taskLate.toFloat(), Color(0xFFF06292),"Late"),
-                            Slice(user.taskPending.toFloat(), Color(0xFF81C784),"OnGoing"),
+                            Slice(stat.taskCompleted.toFloat(), Color(0xFF64B5F6),"Completed"),
+                            Slice(stat.taskLate.toFloat(), Color(0xFFF06292),"Late"),
+                            Slice(stat.taskPending.toFloat(), Color(0xFF81C784),"OnGoing"),
                         )
 
 
@@ -158,8 +158,8 @@ fun StatScreen(viewModel: UserViewModel = hiltViewModel()){
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    val completedTasks = user.taskCompleted
-                    val lateTasks = user.taskLate
+                    val completedTasks = stat.taskCompleted
+                    val lateTasks = stat.taskLate
                     val totalCompleted = completedTasks + lateTasks
                     val onTimePercentage = if (totalCompleted > 0) {
                         (completedTasks.toFloat() / totalCompleted.toFloat() * 100).toInt()
@@ -167,9 +167,9 @@ fun StatScreen(viewModel: UserViewModel = hiltViewModel()){
                         0
                     }
 
-                    val TotalBelajar = user.belajarTotal
-                    val TotalTugas = user.tugasTotal
-                    val TotalKerja = user.kerjaTotal
+                    val TotalBelajar = stat.belajarTotal
+                    val TotalTugas = stat.tugasTotal
+                    val TotalKerja = stat.kerjaTotal
 
 
                     StatCard(
