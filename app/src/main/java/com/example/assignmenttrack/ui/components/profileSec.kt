@@ -3,6 +3,8 @@ package com.example.assignmenttrack.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +18,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.DataUsage
-import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,15 +61,24 @@ fun ProfileSection(viewModel: UserViewModel = hiltViewModel(), onProfileClick: (
             // bagian buat show profile pict
             Row(
                 modifier = Modifier
-                    .padding(4.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .clickable (
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ){
+                        onProfileClick()
+                    },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
             ) {
                 Image(
                     modifier = Modifier
+                        .size(80.dp)
                         .padding(all = 8.dp)
                         .clip(shape = CircleShape)
-                        .size(70.dp)
-                        .border(width = 1.dp, color = Color.Black, shape = CircleShape),
+                        .border(width = 1.dp, color = Color.Black, shape = CircleShape)
+                        .clickable{
+                            onProfileClick()
+                        },
                     painter = rememberAsyncImagePainter(
                         model = user.profilePicturePath?.takeIf { it.isNotEmpty() }?.let { File(it) }
                             ?: R.drawable.profile
@@ -75,27 +86,21 @@ fun ProfileSection(viewModel: UserViewModel = hiltViewModel(), onProfileClick: (
                     contentScale = ContentScale.Crop,
                     contentDescription = ("User Profile"),
                 )
-
-                Column {
+                Column{
                     Text(
                         text = "Halo!",
                         color = Color(0xFF2260FF), style = MaterialTheme.typography.titleMedium,
                         fontFamily = leagueSpartan,
                         fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(start = 8.dp)
                     )
-
                     Text(
                         text = user.name,
                         color = Color.Black, style = MaterialTheme.typography.titleLarge,
                         fontFamily = leagueSpartan,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(start = 8.dp)
                     )
                 }
-
             }
-
 
             // setting button/notif (kgk tau buat apaan pakek aja dlu)
             Row(
@@ -134,24 +139,6 @@ fun ProfileSection(viewModel: UserViewModel = hiltViewModel(), onProfileClick: (
                     Icon(
                         imageVector = Icons.Default.DataUsage,
                         contentDescription = "Show Stat",
-                        tint = Color.DarkGray,
-                    )
-                }
-
-//              Profile Button
-                IconButton(
-                    onClick = onProfileClick,
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFCAD6FF))
-                        .align(Alignment.CenterVertically)
-                        .height(40.dp)
-                        .width(40.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.PersonOutline,
-                        contentDescription = "Settings",
                         tint = Color.DarkGray,
                     )
                 }
