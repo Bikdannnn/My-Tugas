@@ -35,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.assignmenttrack.database.TaskRepository
 import com.example.assignmenttrack.model.Task
 import com.example.assignmenttrack.viewModel.TaskListViewModel
 import java.time.Instant
@@ -136,7 +135,7 @@ fun TaskForm(modifier: Modifier = Modifier, taskListViewModel: TaskListViewModel
                 onClick = {
                     if (LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant() > (selectedDateTime.atZone(ZoneId.systemDefault()).toInstant())) {
                         hasError = true
-                        errorMessage = "Due date cannot be in the past or in current time"
+                        errorMessage = "Please Assign a date and time in the future"
                     } else {
                         hasError = false
                         val newTask = Task(
