@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.assignmenttrack.model.Task
 import com.example.assignmenttrack.ui.components.Calendar
 import com.example.assignmenttrack.ui.components.TaskCard
+import com.example.assignmenttrack.ui.components.TaskCardCalendar
 import com.example.assignmenttrack.ui.theme.leagueSpartan
 import com.example.assignmenttrack.viewModel.CalendarViewModel
 import java.time.LocalDate
@@ -177,7 +178,7 @@ fun TaskList(modifier: Modifier = Modifier, tasks: List<Task>) {
         contentPadding = PaddingValues(top = 16.dp, bottom = 42.dp),
     ){
         items(items = tasks, key = { it.id }) { task ->
-            TaskCard(task, modifier = Modifier.fillMaxWidth(), onEditClick = {})
+            TaskCardCalendar(task, modifier = Modifier.fillMaxWidth(), onEditClick = {})
             Spacer(modifier = Modifier.height(16.dp))
         }
     }

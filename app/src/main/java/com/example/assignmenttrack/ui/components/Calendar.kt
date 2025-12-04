@@ -248,9 +248,9 @@ private fun CalendarDayCells(
 
     val textSize = when {
         isCurrentMonth ->
-            10.sp
+            12.sp
         else ->
-            6.sp
+            10.sp
     }
 
     Box(
